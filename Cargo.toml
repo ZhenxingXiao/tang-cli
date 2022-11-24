@@ -1,0 +1,25 @@
+[package]
+name = "tang-cli"
+version = "0.1.0"
+edition = "2021"
+authors=["Albert Xiao <xiaozhenxing.albert@outlook.com>"]
+readme="README.md"
+license-file="LICENSE"
+repository=""
+rust-version="1.64.0"
+description=""
+documentation=""
+homepage=""
+keywords=["Tang", "File Management", "CLI"]
+categories=[]
+
+[dependencies]
+tui = "0.19"
+crossterm = "0.25"
+thiserror = "1.0.37"
+rand = "0.8"
+argh = "0.1"
+
+[[bin]]
+name="tang"
+path="src/main.rs"
