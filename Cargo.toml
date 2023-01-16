@@ -20,6 +20,9 @@ thiserror = "1.0.37"
 rand = "0.8"
 argh = "0.1"
 
+[env]
+TANG_CLI_VERSION = "0.0.003"
+
 [[bin]]
 name="tang"
 path="src/main.rs"

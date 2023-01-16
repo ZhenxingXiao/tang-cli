@@ -1,5 +1,5 @@
 use crate::{app::App, ui};
-use crate::cli_args::{CliCommand, CliSubCommandEnum};
+use crate::cli_args::{CliCommand, CliSubCommandEnum, PerformanceCommand, InfoCommand};
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
     execute,
@@ -17,29 +17,40 @@ use tui::{
 };
 
 pub fn run(title: &str, cli: CliCommand) -> Result<(), Box<dyn Error>>{
-    // setup terminal
-    enable_raw_mode()?;
-    let mut stdout = io::stdout();
-    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
-    let backend = CrosstermBackend::new(stdout);
-    let mut terminal = Terminal::new(backend)?;
+    //match command mode
+    match cli.nested {
+        //common mode
+        CliSubCommandEnum::Info(_info) => {
+            print!("This is the information!!!")
+        },
 
-    // create app and run it
-    let mut app = App::new(title, cli);
-    let tick_rate = Duration::from_millis(app.cli_args.tick_rate);
-    let res = run_app(&mut terminal, &mut app, tick_rate);
+        //interactive mode
+        _ => {
+            // setup terminal
+            enable_raw_mode()?;
+            let mut stdout = io::stdout();
+            execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+            let backend = CrosstermBackend::new(stdout);
+            let mut terminal = Terminal::new(backend)?;
 
-    // restore terminal
-    disable_raw_mode()?;
-    execute!(
-        terminal.backend_mut(),
-        LeaveAlternateScreen,
-        DisableMouseCapture
-    )?;
-    terminal.show_cursor()?;
+            // create app and run it
+            let mut app = App::new(title, cli);
+            let tick_rate = Duration::from_millis(app.cli_args.tick_rate);
+            let res = run_app(&mut terminal, &mut app, tick_rate);
 
-    if let Err(err) = res {
-        println!("{:?}", err)
+            // restore terminal
+            disable_raw_mode()?;
+            execute!(
+                terminal.backend_mut(),
+                LeaveAlternateScreen,
+                DisableMouseCapture
+            )?;
+            terminal.show_cursor()?;
+
+            if let Err(err) = res {
+                println!("{:?}", err)
+            }
+        }
     }
 
     Ok(())
