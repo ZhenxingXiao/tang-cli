@@ -3,6 +3,7 @@ mod ui;
 mod cli_args;
 mod crossterm;
 mod tsys;
+mod doc;
 
 use crate::crossterm::run;
 use cli_args::CliCommand;

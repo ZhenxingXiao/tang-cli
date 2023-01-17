@@ -1,11 +1,12 @@
 [package]
-name = "tang-cli"
+name = "Tang-CLI"
 version = "0.1.0"
 edition = "2021"
 authors=["Albert Xiao <xiaozhenxing.albert@outlook.com>"]
 readme="README.md"
+license="MIT License"
 license-file="LICENSE"
-repository=""
+repository="https://github.com/ZhenxingXiao/tang-cli.git"
 rust-version="1.64.0"
 description=""
 documentation=""
@@ -14,14 +15,13 @@ keywords=["Tang", "File Management", "CLI"]
 categories=[]
 
 [dependencies]
+indoc = "1.0"
 tui = "0.19"
 crossterm = "0.25"
 thiserror = "1.0.37"
 rand = "0.8"
 argh = "0.1"
-
-[env]
-TANG_CLI_VERSION = "0.0.003"
+chrono = "0.4.23"
 
 [[bin]]
 name="tang"
