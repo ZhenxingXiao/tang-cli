@@ -21,6 +21,7 @@ pub fn draw<B: Backend>(f: &mut Frame<B>, app: &mut App) {
             Constraint::Length(3)].as_ref())
         .split(f.size());
     draw_header(f, app, chunks[0]);
+    draw_content(f, app, chunks[1]);
     draw_footer(f, chunks[2]);
 }
 
@@ -42,4 +43,16 @@ pub fn draw_footer<B: Backend>(f: &mut Frame<B>, area: Rect){
         .borders(Borders::TOP | Borders::BOTTOM).border_type(BorderType::Plain);
     let paragraph = Paragraph::new(text).block(block).wrap(Wrap { trim: true });
     f.render_widget(paragraph, area);
+}
+
+pub fn draw_content<B: Backend>(f: &mut Frame<B>, app: &mut App, area: Rect){
+    let sparkline = Sparkline::default()
+    .block(
+        Block::default()
+            .title("Data1")
+            .borders(Borders::LEFT | Borders::RIGHT),
+    )
+    .data(&app.random_data)
+    .style(Style::default().fg(Color::Cyan));
+    f.render_widget(sparkline, area);
 }

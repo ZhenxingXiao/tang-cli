@@ -2,6 +2,8 @@ use rand::{
     distributions::{Distribution, Uniform},
     rngs::ThreadRng,
 };
+
+
 pub struct Signal<S: Iterator> 
 {
     source: S,
