@@ -1,15 +1,10 @@
 use crate::app::App;
 use tui::{
     backend::Backend,
-    layout::{Constraint, Direction, Layout, Rect, Alignment},
-    style::{Color, Modifier, Style},
-    symbols,
-    text::{Span, Spans},
-    widgets::{canvas::{Canvas, Line, Map, MapResolution, Rectangle}, BorderType},
-    widgets::{
-        Axis, BarChart, Block, Borders, Cell, Chart, Dataset, Gauge, LineGauge, List, ListItem,
-        Paragraph, Row, Sparkline, Table, Tabs, Wrap,
-    },
+    layout::{Constraint, Layout, Rect, Alignment},
+    text::Spans,
+    widgets::BorderType,
+    widgets::{Block, Borders, Paragraph, Wrap},
     Frame,
 };
 
@@ -46,13 +41,5 @@ pub fn draw_footer<B: Backend>(f: &mut Frame<B>, area: Rect){
 }
 
 pub fn draw_content<B: Backend>(f: &mut Frame<B>, app: &mut App, area: Rect){
-    let sparkline = Sparkline::default()
-    .block(
-        Block::default()
-            .title("Data1")
-            .borders(Borders::LEFT | Borders::RIGHT),
-    )
-    .data(&app.random_data)
-    .style(Style::default().fg(Color::Cyan));
-    f.render_widget(sparkline, area);
+    
 }

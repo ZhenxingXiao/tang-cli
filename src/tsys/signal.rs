@@ -1,9 +1,11 @@
 use rand::{
-    distributions::{Distribution, Uniform},
+    distributions::{Distribution, Uniform, uniform::SampleUniform},
     rngs::ThreadRng,
 };
+use sysinfo::{CpuExt, System, SystemExt, Cpu};
+use crate::utils::constants::app_constants::CPU_SIGNAL_LEN;
 
-
+#[allow(dead_code)]
 pub struct Signal<S: Iterator> 
 {
     source: S,
@@ -13,6 +15,7 @@ pub struct Signal<S: Iterator>
 
 impl<S> Signal<S> where S: Iterator,
 {
+    #[allow(dead_code)]
     fn on_tick(&mut self) {
         for _ in 0..self.tick_rate {
             self.points.remove(0);
@@ -22,43 +25,43 @@ impl<S> Signal<S> where S: Iterator,
     }
 }
 
-#[derive(Clone)]
-pub struct RandomSignal {
-    distribution: Uniform<u64>,
+pub struct RandomSignal<T> where T: SampleUniform{
+    distribution: Uniform<T>,
     rng: ThreadRng,
 }
 
-impl RandomSignal {
-    pub fn new(lower: u64, upper: u64) -> RandomSignal {
-        RandomSignal {
+impl<T> RandomSignal<T> where T: SampleUniform{
+    #[allow(dead_code)]
+    pub fn new(lower: T, upper: T) -> Self{
+        Self {
             distribution: Uniform::new(lower, upper),
             rng: rand::thread_rng(),
         }
     }
 }
 
-impl Iterator for RandomSignal {
-    type Item = u64;
-    fn next(&mut self) -> Option<u64> {
+impl<T> Iterator for RandomSignal<T> where T: SampleUniform{
+    type Item = T;
+    fn next(&mut self) -> Option<T> {
         Some(self.distribution.sample(&mut self.rng))
     }
 }
 
-#[derive(Clone)]
-pub struct ConstantSignal {
-    constant: u64,
+#[derive(Clone, Copy)]
+pub struct ConstantSignal<T> where T: Copy {
+    constant: T,
 }
 
-impl ConstantSignal {
-    pub fn new(_constant: u64) -> ConstantSignal{
-        ConstantSignal { 
+impl<T> ConstantSignal<T> where T: Copy {
+    pub fn new(_constant: T) -> Self{
+        Self { 
             constant: _constant
          }
     }
 }
 
-impl Iterator for ConstantSignal {
-    type Item = u64;
+impl<T> Iterator for ConstantSignal<T> where T: Copy {
+    type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
         Some(self.constant)
     }

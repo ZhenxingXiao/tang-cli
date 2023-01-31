@@ -12,6 +12,7 @@ use crate::utils::constants::{
     err_info
 };
 use cli_args::CliCommand;
+use sysinfo::{System, SystemExt};
 use std::{error::Error};
 
 /**
@@ -19,13 +20,13 @@ use std::{error::Error};
  */
 fn main() -> Result<(), Box<dyn Error>> {
     let title = app_constants::APP_TITLE;
-
     if std::env::args().count() <= 1 {
         println!("{}", title);
         println!("{}", err_info::HELP_INFO);
     } else {
         let cli: CliCommand = argh::from_env();
-        let res = run(title, cli);
+        let system: System = System::new();
+        let res = run(title, system, cli);
         if let Err(err) = res {
             println!("{:?}", err)
         }
