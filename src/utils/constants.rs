@@ -2,10 +2,12 @@ pub const UNKNOWN: &str = "unknown";
 
 pub mod ui_constants{
     //pub const RANDOM_SIGNAL_AREA_TITLE: &str = "Random Signal";
+    // pub const TOTAL: &str = "Total";
 }
 
 pub mod app_constants{
     pub const APP_TITLE: &str = "🌿 Tang-CLI 🌿";
+    pub const QUIT_INFO: &str = "💻 Press 'Q' to quit !";
     pub const CPU_SIGNAL_LEN: usize = 100;
 }
 

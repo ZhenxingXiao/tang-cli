@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("{}", err_info::HELP_INFO);
     } else {
         let cli: CliCommand = argh::from_env();
-        let system: System = System::new();
+        let system: System = System::new_all();
         let res = run(title, system, cli);
         if let Err(err) = res {
             println!("{:?}", err)
